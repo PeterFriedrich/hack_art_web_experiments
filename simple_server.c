@@ -20,8 +20,12 @@ int main(void) {
     if ((sockfd = socket(PF_INET, SOCK_STREAM, 0)) == -1)
         fatal("in socket");
 
+    printf("Socket good.\n");
+
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
         fatal("setting socket option SO_REUSEADDR");
+
+    printf("Socket option set.\n");
 
     host_addr.sin_family = AF_INET; // Host byte order
     host_addr.sin_port = htons(PORT); // Short, network byte order
@@ -31,8 +35,12 @@ int main(void) {
     if (bind(sockfd, (struct sockaddr *) &host_addr, sizeof(struct sockaddr)) == -1)
         fatal("binding to socket");
 
+    printf("Socket binding.\n");
+
     if (listen(sockfd, 5) == -1)
         fatal("listening on socket");
+
+    printf("Socket listening.\n");
 
     while(1) { // Accept loop.
         sin_size = sizeof(struct sockaddr_in);
